@@ -57,7 +57,7 @@ void draw_polygons( struct matrix *polygons, screen s, color c ) {
     normal = calculate_normal(polygons, point);
 
     if ( normal[2] > 0 ) {
-    
+      scanline(polygons, s, c, point);
       draw_line( polygons->m[0][point],
 		 polygons->m[1][point],
 		 polygons->m[0][point+1],
@@ -77,6 +77,28 @@ void draw_polygons( struct matrix *polygons, screen s, color c ) {
   }
 }
 
+void scanline( struct matrix *polygons, screen s, color c, int point ) {
+  int tx, mx, bx, ty, my, by;
+  //get tops middle and bottom
+  if(polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1]){
+    tx = polygons->m[0][point];
+  }
+  else if(polygons->m[0][point +1] >= polygons->m[0][point + 2] && polygons->m[0][point + 1] >= polygons->m[0][point]){
+    tx = polygons->m[0][point + 1];
+  }
+  else if(polygons->m[0][point +2] >= polygons->m[0][point + 1] && polygons->m[0][point + 2] >= polygons->m[0][point]){
+    tx = polygons->m[0][point + 2];
+  }
+  if((polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] <= polygons->m[0][point + 1]) || (polygons->m[0][point] <= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1])){
+    mx = polygons->m[0][point];
+  }
+  else if((polygons->m[0][point +1] >= polygons->m[0][point + 2] && polygons->m[0][point + 1] <= polygons->m[0][point]) || (polygons->m[0][point +1] <= polygons->m[0][point + 2] && polygons->m[0][point + 1] >= polygons->m[0][point])){
+    mx = polygons->m[0][point +1];
+  }
+  else if((polygons->m[0][point +2] >= polygons->m[0][point + 1] && polygons->m[0][point + 2] <= polygons->m[0][point]) || (polygons->m[0][point +2] <= polygons->m[0][point +1] && polygons->m[0][point + 2] >= polygons->m[0][point])){
+    mx = polygons->m[0][point +2];
+  }
+}
 /*======== void add_box() ==========
   Inputs:   struct matrix * edges
             double x
