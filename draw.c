@@ -43,6 +43,90 @@ Goes through polygons 3 points at a time, drawing
 lines connecting each points to create bounding
 triangles
 ====================*/
+
+
+void scanline( struct matrix *polygons, screen s, color c, int point ) {
+  int tx, mx, bx, ty, my, by;
+  //get tops middle and bottom
+  if(polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1]){
+    tx = polygons->m[0][point];
+  }
+  else if(polygons->m[0][point +1] >= polygons->m[0][point + 2] && polygons->m[0][point + 1] >= polygons->m[0][point]){
+    tx = polygons->m[0][point + 1];
+  }
+  else if(polygons->m[0][point +2] >= polygons->m[0][point + 1] && polygons->m[0][point + 2] >= polygons->m[0][point]){
+    tx = polygons->m[0][point + 2];
+  }
+  if((polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] <= polygons->m[0][point + 1]) || (polygons->m[0][point] <= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1])){
+    mx = polygons->m[0][point];
+  }
+  else if((polygons->m[0][point +1] >= polygons->m[0][point + 2] && polygons->m[0][point + 1] <= polygons->m[0][point]) || (polygons->m[0][point +1] <= polygons->m[0][point + 2] && polygons->m[0][point + 1] >= polygons->m[0][point])){
+    mx = polygons->m[0][point +1];
+  }
+  else if((polygons->m[0][point +2] >= polygons->m[0][point + 1] && polygons->m[0][point + 2] <= polygons->m[0][point]) || (polygons->m[0][point +2] <= polygons->m[0][point +1] && polygons->m[0][point + 2] >= polygons->m[0][point])){
+    mx = polygons->m[0][point +2];
+  }
+  if(polygons->m[0][point] <= polygons->m[0][point + 2] && polygons->m[0][point] <= polygons->m[0][point + 1]){
+    bx = polygons->m[0][point];
+  }
+  else if(polygons->m[0][point +1] <= polygons->m[0][point + 2] && polygons->m[0][point + 1] <= polygons->m[0][point]){
+    bx = polygons->m[0][point + 1];
+  }
+  else if(polygons->m[0][point +2] <= polygons->m[0][point + 1] && polygons->m[0][point + 2] <= polygons->m[0][point]){
+    bx = polygons->m[0][point + 2];
+  }
+
+
+  // do it again for y
+
+
+  if(polygons->m[1][point] >= polygons->m[1][point + 2] && polygons->m[1][point] >= polygons->m[1][point + 1]){
+    ty = polygons->m[1][point];
+  }
+  else if(polygons->m[1][point +1] >= polygons->m[1][point + 2] && polygons->m[1][point + 1] >= polygons->m[1][point]){
+    ty = polygons->m[1][point + 1];
+  }
+  else if(polygons->m[1][point +2] >= polygons->m[1][point + 1] && polygons->m[1][point + 2] >= polygons->m[1][point]){
+    ty = polygons->m[1][point + 2];
+  }
+  if((polygons->m[1][point] >= polygons->m[1][point + 2] && polygons->m[1][point] <= polygons->m[1][point + 1]) || (polygons->m[1][point] <= polygons->m[1][point + 2] && polygons->m[1][point] >= polygons->m[1][point + 1])){
+    my = polygons->m[1][point];
+  }
+  else if((polygons->m[1][point +1] >= polygons->m[1][point + 2] && polygons->m[1][point + 1] <= polygons->m[1][point]) || (polygons->m[1][point +1] <= polygons->m[1][point + 2] && polygons->m[1][point + 1] >= polygons->m[1][point])){
+    my = polygons->m[1][point +1];
+  }
+  else if((polygons->m[1][point +2] >= polygons->m[1][point + 1] && polygons->m[1][point + 2] <= polygons->m[1][point]) || (polygons->m[1][point +2] <= polygons->m[1][point +1] && polygons->m[1][point + 2] >= polygons->m[1][point])){
+    my = polygons->m[1][point +2];
+  }
+  if(polygons->m[1][point] <= polygons->m[1][point + 2] && polygons->m[1][point] <= polygons->m[1][point + 1]){
+    by = polygons->m[1][point];
+  }
+  else if(polygons->m[1][point +1] <= polygons->m[1][point + 2] && polygons->m[1][point + 1] <= polygons->m[1][point]){
+    by = polygons->m[1][point + 1];
+  }
+  else if(polygons->m[1][point +2] <= polygons->m[1][point + 1] && polygons->m[1][point + 2] <= polygons->m[1][point]){
+    by = polygons->m[1][point + 2];
+  }
+  //double dx0 = (tx-bx)/(ty-by);
+  //double dx1 = (mx-bx)/(my-ty);
+  double bx0 = bx;
+  double bx1 = bx;
+  while(by < ty){
+    if(ty-by != 0 && my-ty != 0){
+      draw_line( bx0,
+		 by,
+		 bx1,
+		 by,
+		 s, c);
+    }
+    printf("%d\n", by);
+    by += 1;
+    //bx0 += dx0;
+    //bx1 += dx1;
+  }
+}
+
+
 void draw_polygons( struct matrix *polygons, screen s, color c ) {
   if ( polygons->lastcol < 3 ) {
     printf("Need at least 3 points to draw a polygon!\n");
@@ -74,29 +158,6 @@ void draw_polygons( struct matrix *polygons, screen s, color c ) {
 		 polygons->m[1][point+2],
 		 s, c);
        }
-  }
-}
-
-void scanline( struct matrix *polygons, screen s, color c, int point ) {
-  int tx, mx, bx, ty, my, by;
-  //get tops middle and bottom
-  if(polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1]){
-    tx = polygons->m[0][point];
-  }
-  else if(polygons->m[0][point +1] >= polygons->m[0][point + 2] && polygons->m[0][point + 1] >= polygons->m[0][point]){
-    tx = polygons->m[0][point + 1];
-  }
-  else if(polygons->m[0][point +2] >= polygons->m[0][point + 1] && polygons->m[0][point + 2] >= polygons->m[0][point]){
-    tx = polygons->m[0][point + 2];
-  }
-  if((polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] <= polygons->m[0][point + 1]) || (polygons->m[0][point] <= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1])){
-    mx = polygons->m[0][point];
-  }
-  else if((polygons->m[0][point +1] >= polygons->m[0][point + 2] && polygons->m[0][point + 1] <= polygons->m[0][point]) || (polygons->m[0][point +1] <= polygons->m[0][point + 2] && polygons->m[0][point + 1] >= polygons->m[0][point])){
-    mx = polygons->m[0][point +1];
-  }
-  else if((polygons->m[0][point +2] >= polygons->m[0][point + 1] && polygons->m[0][point + 2] <= polygons->m[0][point]) || (polygons->m[0][point +2] <= polygons->m[0][point +1] && polygons->m[0][point + 2] >= polygons->m[0][point])){
-    mx = polygons->m[0][point +2];
   }
 }
 /*======== void add_box() ==========
