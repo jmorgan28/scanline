@@ -121,8 +121,8 @@ void scanline( struct matrix *polygons, screen s, color c, int point ) {
     }
     printf("%d\n", by);
     by += 1;
-    //bx0 += dx0;
-    //bx1 += dx1;
+    bx0 += (tx-bx)/(ty-by);
+    bx1 += (mx-bx)/(my-ty);
   }
 }
 
