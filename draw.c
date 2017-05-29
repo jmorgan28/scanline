@@ -47,7 +47,20 @@ triangles
 
 void scanline( struct matrix *polygons, screen s, color c, int point ) {
   float tx, mx, bx, ty, my, by;
+  tx = 0;
+  mx = 0;
+  bx = 0;
+  ty = 0;
+  my = 0;
+  by = 0;
   //get tops middle and bottom
+  printf("tx: %f \n", tx);
+  printf("mx: %f \n", mx);
+  printf("bx: %f \n", bx);
+  printf("ty: %f \n", ty);
+  printf("my: %f \n", my);
+  printf("by: %f \n", by);
+  printf("\n");
   if(polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1]){
     tx = polygons->m[0][point];
   }
@@ -107,25 +120,65 @@ void scanline( struct matrix *polygons, screen s, color c, int point ) {
   else if(polygons->m[1][point +2] <= polygons->m[1][point + 1] && polygons->m[1][point + 2] <= polygons->m[1][point]){
     by = polygons->m[1][point + 2];
   }
-  float dx0 = (tx-bx)/(ty-by);
-  float dx1 = (mx-bx)/(my-ty);
+
+  printf("tx: %f \n", tx);
+  printf("mx: %f \n", mx);
+  printf("bx: %f \n", bx);
+  printf("ty: %f \n", ty);
+  printf("my: %f \n", my);
+  printf("by: %f \n", by);
+  float dx0; //= (tx-bx)/(ty-by);
+  float dx1; //= (mx-bx)/(my-ty);
+  float dx2;// = (tx-mx) / (ty-my)
   float bx0 = bx;
   float bx1 = bx;
+  if(ty - by != 0){ //dx2
+      dx0 = (tx-bx)/(ty-by);
+    }
+  else{
+    dx0 = 0;
+  }
+    if(my - by != 0){ //dx1
+      dx1 = (mx-bx)/(my-by);
+    }
+    else{
+      dx1 = 0;
+    }
+     if(ty - my != 0){
+       dx2 = (tx-mx)/(ty-my); //dx3
+    }
+     else{
+       dx2 = 0;
+     }
   while(by < ty){
-    if(ty-by != 0 && my-ty != 0){
       draw_line( bx0,
 		 by,
 		 bx1,
 		 by,
 		 s, c);
-    }
-    printf("%d\n", by);
-    by += 1;
-    bx0 += (tx-bx)/(ty-by);
-    bx1 += (mx-bx)/(my-ty);
+      //printf("%d\n", by);
+      by += 1;
+      if(dx0 < dx1){
+	bx0 += dx0;
+	if(by <  my){
+	  bx1 += dx1;
+	}
+	else{
+	  bx1 += dx2;
+	}
+      }
+      else{
+	bx1 += dx0;
+	if(by <  my){
+	  bx0 += dx1;
+	}
+	else{
+	  bx0 += dx2;
+	}
+      }
   }
 }
-
+      
 
 void draw_polygons( struct matrix *polygons, screen s, color c ) {
   if ( polygons->lastcol < 3 ) {
@@ -136,11 +189,14 @@ void draw_polygons( struct matrix *polygons, screen s, color c ) {
   int point;
   double *normal;
   
-  for (point=0; point < polygons->lastcol-2; point+=3) {//
+  for (point=0; point < polygons->lastcol-2; point+=3) {
 
     normal = calculate_normal(polygons, point);
 
     if ( normal[2] > 0 ) {
+      c.green += 230;
+      c.blue += 2;
+      c.red += 3;
       scanline(polygons, s, c, point);
       draw_line( polygons->m[0][point],
 		 polygons->m[1][point],
