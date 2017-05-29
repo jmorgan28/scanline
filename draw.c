@@ -127,7 +127,7 @@ void scanline( struct matrix *polygons, screen s, color c, int point ) {
   printf("ty: %f \n", ty);
   printf("my: %f \n", my);
   printf("by: %f \n", by);
-  float dx0; //= (tx-bx)/(ty-by);
+  /*float dx0; //= (tx-bx)/(ty-by);
   float dx1; //= (mx-bx)/(my-ty);
   float dx2;// = (tx-mx) / (ty-my)
   float bx0 = bx;
@@ -176,6 +176,23 @@ void scanline( struct matrix *polygons, screen s, color c, int point ) {
 	  bx0 += dx2;
 	}
       }
+      }*/
+  float dx0 = (tx-bx)/(ty-by);
+  float dx1 = (mx-bx)/(my-ty);
+  float bx0 = bx;
+  float bx1 = bx;
+  while(by < ty){
+    if(ty-by != 0 && my-ty != 0){
+      draw_line( bx0,
+		 by,
+		 bx1,
+		 by,
+		 s, c);
+    }
+    printf("%d\n", by);
+    by += 1;
+    bx0 += dx0;
+    bx1 += dx1;
   }
 }
       
