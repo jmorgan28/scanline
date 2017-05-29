@@ -46,7 +46,7 @@ triangles
 
 
 void scanline( struct matrix *polygons, screen s, color c, int point ) {
-  int tx, mx, bx, ty, my, by;
+  float tx, mx, bx, ty, my, by;
   //get tops middle and bottom
   if(polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1]){
     tx = polygons->m[0][point];
@@ -107,10 +107,10 @@ void scanline( struct matrix *polygons, screen s, color c, int point ) {
   else if(polygons->m[1][point +2] <= polygons->m[1][point + 1] && polygons->m[1][point + 2] <= polygons->m[1][point]){
     by = polygons->m[1][point + 2];
   }
-  //double dx0 = (tx-bx)/(ty-by);
-  //double dx1 = (mx-bx)/(my-ty);
-  double bx0 = bx;
-  double bx1 = bx;
+  float dx0 = (tx-bx)/(ty-by);
+  float dx1 = (mx-bx)/(my-ty);
+  float bx0 = bx;
+  float bx1 = bx;
   while(by < ty){
     if(ty-by != 0 && my-ty != 0){
       draw_line( bx0,
@@ -136,7 +136,7 @@ void draw_polygons( struct matrix *polygons, screen s, color c ) {
   int point;
   double *normal;
   
-  for (point=0; point < polygons->lastcol-2; point+=3) {
+  for (point=0; point < polygons->lastcol-2; point+=3) {//
 
     normal = calculate_normal(polygons, point);
 
