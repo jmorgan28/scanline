@@ -189,7 +189,7 @@ void scanline( struct matrix *polygons, screen s, color c, int point ) {
 		 by,
 		 s, c);
     }
-    printf("%d\n", by);
+    //printf("%f\n", by);
     by += 1;
     bx0 += dx0;
     bx1 += dx1;
