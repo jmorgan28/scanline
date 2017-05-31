@@ -178,12 +178,7 @@ void scanline( struct matrix *polygons, screen s, color c, int point ) {
       }
       }*/
   float dx0,dx1,dx2;
-  if(ty - by != 0){ //dx2
-    dx0 = (tx-bx)/(ty-by);
-  }
-  else{
-    dx0 = 0;
-  }
+  dx0 = (tx-bx)/(ty-by);
   if(my - by != 0){ //dx1
     dx1 = (mx-bx)/(my-by);
   }
