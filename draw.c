@@ -201,9 +201,9 @@ void scanline( struct matrix *polygons, screen s, color c, int point ) {
   c.green = rand() % 256;
   c.red = rand() % (256);
   c.blue = rand() % (256);
-  if(by == my){
+  if(dx1 == 0){
     bx1 = mx; // thanks emma
-    }
+  }
   while(by < ty){
       draw_line( bx0,
 		 by,
@@ -212,15 +212,14 @@ void scanline( struct matrix *polygons, screen s, color c, int point ) {
 		 s, c);
     //printf("%f\n", by);
     by += 1;
-    if(dx0 > dx1){
     bx0 += dx0;
-    bx1 += dx1;
+    if(by >= my){
+    bx1 += dx2;
     }
     else{
-    bx0 += dx1;
-    bx1 += dx0;
+    bx1 += dx1;
     }
-    }
+  }
 }
       
 
