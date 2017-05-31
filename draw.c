@@ -231,7 +231,7 @@ void draw_polygons( struct matrix *polygons, screen s, color c ) {
 
     normal = calculate_normal(polygons, point);
 
-    if ( normal[2] > 0 ) {
+    //if ( normal[2] > 0 ) {
       c.green += 230;
       c.blue += 2;
       c.red += 3;
@@ -251,7 +251,7 @@ void draw_polygons( struct matrix *polygons, screen s, color c ) {
 		 polygons->m[0][point+2],
 		 polygons->m[1][point+2],
 		 s, c);
-      }
+      //}
   }
 }
 /*======== void add_box() ==========
