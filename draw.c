@@ -200,7 +200,10 @@ void scanline( struct matrix *polygons, screen s, color c, int point ) {
   float bx1 = bx;
   c.green = rand() % 256;
   c.red = rand() % (256);
-  c.blue = rand() % (256); 
+  c.blue = rand() % (256);
+  if(by == my){
+    bx1 = mx; // thanks emma
+    }
   while(by < ty){
       draw_line( bx0,
 		 by,
