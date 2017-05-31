@@ -177,23 +177,47 @@ void scanline( struct matrix *polygons, screen s, color c, int point ) {
 	}
       }
       }*/
-  float dx0 = (tx-bx)/(ty-by);
-  float dx1 = (mx-bx)/(my-ty);
+  float dx0,dx1,dx2;
+  if(ty - by != 0){ //dx2
+    dx0 = (tx-bx)/(ty-by);
+  }
+  else{
+    dx0 = 0;
+  }
+  if(my - by != 0){ //dx1
+    dx1 = (mx-bx)/(my-by);
+  }
+  else{
+    dx1 = 0;
+  }
+  if(ty - my != 0){
+    dx2 = (tx-mx)/(ty-my); //dx3
+  }
+  else{
+    dx2 = 0;
+  }
   float bx0 = bx;
   float bx1 = bx;
+  c.green = rand() % 256;
+  c.red = rand() % (256);
+  c.blue = rand() % (256); 
   while(by < ty){
-    if(ty-by != 0 && my-ty != 0){
       draw_line( bx0,
 		 by,
 		 bx1,
 		 by,
 		 s, c);
-    }
     //printf("%f\n", by);
     by += 1;
+    if(dx0 > dx1){
     bx0 += dx0;
     bx1 += dx1;
-  }
+    }
+    else{
+    bx0 += dx1;
+    bx1 += dx0;
+    }
+    }
 }
       
 
@@ -230,7 +254,7 @@ void draw_polygons( struct matrix *polygons, screen s, color c ) {
 		 polygons->m[0][point+2],
 		 polygons->m[1][point+2],
 		 s, c);
-       }
+      }
   }
 }
 /*======== void add_box() ==========
