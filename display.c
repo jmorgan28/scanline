@@ -8,6 +8,10 @@ for red, green and blue respectively
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <errno.h>
+#include <limits.h>
 
 #include "ml6.h"
 #include "display.h"
@@ -15,6 +19,7 @@ for red, green and blue respectively
 
 /*======== void plot() ==========
 Inputs:   screen s
+         zbuffer zb
          color c
          int x
          int y 
@@ -26,10 +31,9 @@ If you wish to change this behavior, you can change the indicies
 of s that get set. For example, using s[x][YRES-1-y] will have
 pixel 0, 0 located at the lower left corner of the screen
 
-02/12/10 09:09:00
 jdyrlandweaver
 ====================*/
-void plot( screen s, color c, int x, int y) {
+void plot( screen s, zbuffer zb, color c, int x, int y, double z) {
   int newy = YRES - 1 - y;
   if ( x >= 0 && x < XRES && newy >=0 && newy < YRES )
     s[x][newy] = c;
@@ -40,7 +44,6 @@ Inputs:   screen s
 Returns: 
 Sets every color in screen s to black
 
-02/12/10 09:13:40
 jdyrlandweaver
 ====================*/
 void clear_screen( screen s ) {
@@ -59,6 +62,22 @@ void clear_screen( screen s ) {
   for ( y=0; y < YRES; y++ )
     for ( x=0; x < XRES; x++)      
       s[x][y] = c;
+}
+
+/*======== void clear_zbuffer() ==========
+Inputs:   zbuffer   
+Returns: 
+Sets all entries in the zbufffer to LONG_MIN
+
+jdyrlandweaver
+====================*/
+void clear_zbuffer( zbuffer zb ) {
+
+  int x, y;
+
+  for ( y=0; y < YRES; y++ )
+    for ( x=0; x < XRES; x++)      
+      zb[x][y] = LONG_MIN;
 }
 
 /*======== void save_ppm() ==========
@@ -145,3 +164,18 @@ void display( screen s) {
   pclose(f);
 }
 
+
+void make_animation( char * name ) {
+
+  int e, f;
+  char name_arg[128];
+
+  sprintf(name_arg, "anim/%s*", name);
+  strncat(name, ".gif", 128);
+  printf("Making animation: %s\n", name);
+  f = fork();
+  if (f == 0) {
+    e = execlp("convert", "convert", "-delay", "3", name_arg, name, NULL);
+    printf("e: %d errno: %d: %s\n", e, errno, strerror(errno));
+  }
+}

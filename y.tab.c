@@ -2624,12 +2624,10 @@ extern FILE *yyin;
 
 
 int main(int argc, char **argv) {
-  argv[1] = "script.mdl";
+  argv[1] = "robot.mdl";
   yyin = fopen(argv[1],"r");
-  
-  //printf("hello\n");
+
   yyparse();
-  //printf("hello\n");
   //COMMENT OUT PRINT_PCODE AND UNCOMMENT
   //MY_MAIN IN ORDER TO RUN YOUR CODE
   

@@ -782,10 +782,8 @@ extern FILE *yyin;
 int main(int argc, char **argv) {
 
   yyin = fopen(argv[1],"r");
-  
-  printf("hello\n");
+
   yyparse();
-  printf("hello\n");
   //COMMENT OUT PRINT_PCODE AND UNCOMMENT
   //MY_MAIN IN ORDER TO RUN YOUR CODE
   

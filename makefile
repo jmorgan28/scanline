@@ -1,3 +1,4 @@
+
 OBJECTS= symtab.o print_pcode.o matrix.o my_main.o display.o draw.o gmath.o stack.o
 CFLAGS= -g
 LDFLAGS= -lm
@@ -50,4 +51,3 @@ clean:
 	rm y.tab.c y.tab.h
 	rm lex.yy.c
 	rm -rf mdl.dSYM
-
