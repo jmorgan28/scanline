@@ -9,13 +9,16 @@
 #include "gmath.h"
 
 void scanline_convert( struct matrix *polygons, int point, screen s, color c, zbuffer zb ) {
-  float tx, mx, bx, ty, my, by;
+  float tx, mx, bx, ty, my, by,tz,mz,bz;
   tx = 0;
   mx = 0;
   bx = 0;
   ty = 0;
   my = 0;
   by = 0;
+  tz = 0;
+  mz = 0;
+  bz = 0;
   //get tops middle and bottom
   printf("tx: %f \n", tx);
   printf("mx: %f \n", mx);
@@ -84,6 +87,37 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
     by = polygons->m[1][point + 2];
   }
 
+
+  /// do it again for z
+
+  if(polygons->m[2][point] >= polygons->m[2][point + 2] && polygons->m[2][point] >= polygons->m[2][point + 1]){
+    tz = polygons->m[2][point];
+  }
+  else if(polygons->m[2][point +1] >= polygons->m[2][point + 2] && polygons->m[2][point + 1] >= polygons->m[2][point]){
+    tz = polygons->m[2][point + 1];
+  }
+  else if(polygons->m[2][point +2] >= polygons->m[2][point + 1] && polygons->m[2][point + 2] >= polygons->m[2][point]){
+    tz = polygons->m[2][point + 2];
+  }
+  if((polygons->m[2][point] >= polygons->m[2][point + 2] && polygons->m[2][point] <= polygons->m[2][point + 1]) || (polygons->m[2][point] <= polygons->m[2][point + 2] && polygons->m[2][point] >= polygons->m[2][point + 1])){
+    mz = polygons->m[2][point];
+  }
+  else if((polygons->m[2][point +1] >= polygons->m[2][point + 2] && polygons->m[2][point + 1] <= polygons->m[2][point]) || (polygons->m[2][point +1] <= polygons->m[2][point + 2] && polygons->m[2][point + 1] >= polygons->m[2][point])){
+    mz = polygons->m[2][point +1];
+  }
+  else if((polygons->m[2][point +2] >= polygons->m[2][point + 1] && polygons->m[2][point + 2] <= polygons->m[2][point]) || (polygons->m[2][point +2] <= polygons->m[2][point +1] && polygons->m[2][point + 2] >= polygons->m[2][point])){
+    mz = polygons->m[2][point +2];
+  }
+  if(polygons->m[2][point] <= polygons->m[2][point + 2] && polygons->m[2][point] <= polygons->m[2][point + 1]){
+    bz = polygons->m[2][point];
+  }
+  else if(polygons->m[2][point +1] <= polygons->m[2][point + 2] && polygons->m[2][point + 1] <= polygons->m[2][point]){
+    bz = polygons->m[2][point + 1];
+  }
+  else if(polygons->m[2][point +2] <= polygons->m[2][point + 1] && polygons->m[2][point + 2] <= polygons->m[2][point]){
+    bz = polygons->m[2][point + 2];
+  }
+
   printf("tx: %f \n", tx);
   printf("mx: %f \n", mx);
   printf("bx: %f \n", bx);
@@ -140,8 +174,13 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
     }
     }
     }*/
-  float dx0,dx1,dx2;
+  float dx0,dx1,dx2,dz0,dz1,dz2;
+  if(ty - by != 0){
   dx0 = (tx-bx)/(ty-by);
+  }
+  else{
+    dx0 = 0;
+  }
   if(my - by != 0){ //dx1
     dx1 = (mx-bx)/(my-by);
   }
@@ -154,34 +193,60 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   else{
     dx2 = 0;
   }
+
+
+
+  if(ty - by != 0){
+  dz0 = (tz-bz)/(ty-by);
+  }
+  else{
+    dz0 = 0;
+  }
+  if(my - by != 0){ //dx1
+    dz1 = (mz-bz)/(my-by);
+  }
+  else{
+    dz1 = 0;
+  }
+  if(ty - my != 0){
+    dz2 = (tz-mz)/(ty-my); //dx3
+  }
+  else{
+    dz2 = 0;
+  }
   float bx0 = bx;
   float bx1 = bx;
+  float bz0 = bz;
+  float bz1 = bz;
   c.green = rand() % 256;
   c.red = rand() % (256);
   c.blue = rand() % (256);
   if(dx1 == 0){
-    bx1 = mx; // thanks emma
-  }
-  // if(dx2 == 0){
-    //    bx1 = mx;
-    // }
+     bx1 = mx; // thanks emma
+   }
+  if(dz1 == 0){
+     bz1 = mz; // thanks emma
+   }
   while(by < ty){
     draw_line( bx0,
 	       by,
-	       0,
+	       bz0,
 	       bx1,
 	       by,
-	       0,
+	       bz1,
 	       s, zb,c);
     //printf("%f\n", by);
-    by += 1;
     bx0 += dx0;
+    bz0 += dz0;
     if(by >= my){
       bx1 += dx2;
+      bz1 += dz2;
     }
     else{
       bx1 += dx1;
+      bz1 += dz1;
     }
+    by += 1;
   }
 }
 
