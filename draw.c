@@ -37,7 +37,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 
 
   
-  if(polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1]){
+  /*if(polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1]){
     tx = polygons->m[0][point];
   }
   else if(polygons->m[0][point +1] >= polygons->m[0][point + 2] && polygons->m[0][point + 1] >= polygons->m[0][point]){
@@ -96,7 +96,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   else if(polygons->m[1][point +2] <= polygons->m[1][point + 1] && polygons->m[1][point + 2] <= polygons->m[1][point]){
     by = polygons->m[1][point + 2];
   }
-
+  */
 
   /// do it again for z
 
@@ -207,14 +207,21 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 
 
 
-
-  
+  printf("x1: %f \n", polygons->m[0][point]);
+  printf("x2: %f \n", polygons->m[0][point + 1]);
+  printf("x3: %f \n", polygons->m[0][point + 2]);
   printf("tx: %f \n", tx);
   printf("mx: %f \n", mx);
   printf("bx: %f \n", bx);
+  printf("\n");
+
+  printf("y1: %f \n", polygons->m[1][point]);
+  printf("y2: %f \n", polygons->m[1][point + 1]);
+  printf("y3: %f \n", polygons->m[1][point + 2]);
   printf("ty: %f \n", ty);
   printf("my: %f \n", my);
   printf("by: %f \n", by);
+  printf("\n");
   /*float dx0; //= (tx-bx)/(ty-by);
     float dx1; //= (mx-bx)/(my-ty);
     float dx2;// = (tx-mx) / (ty-my)
