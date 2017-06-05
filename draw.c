@@ -29,6 +29,14 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   printf("my: %f \n", my);
   printf("by: %f \n", by);
   printf("\n");
+
+
+ 
+  
+
+
+
+  
   if(polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1]){
     tx = polygons->m[0][point];
   }
@@ -120,6 +128,87 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
     bz = polygons->m[2][point + 2];
   }
 
+
+
+
+
+
+  float top[3]; 
+  top[0] = polygons->m[0][point];
+  top[1] = polygons->m[0][point + 1];
+  top[2] = polygons->m[0][point + 2];
+  int use;
+  for(use  = 0; use < 3; use ++){
+    if(top[use] > tx){
+      tx = top[use];
+    }
+  }
+  bx = top[0];
+  for(use  = 0; use < 3; use ++){
+    if(top[use] < bx){
+      bx = top[use];
+    }
+  }
+  for(use  = 0; use < 3; use ++){
+    if(top[use] == bx){
+      top[use] = -1;
+      use = 100;
+    }
+  }
+  for(use  = 0; use < 3; use ++){
+    if(top[use] == tx){
+      top[use] = -1;
+      use = 100;
+    }
+  }
+  for(use  = 0; use < 3; use ++){
+    if(top[use] != -1){
+      mx = top[use];
+      use = 100;
+    }
+  }
+
+
+  // float top[3]; 
+  top[0] = polygons->m[1][point];
+  top[1] = polygons->m[1][point + 1];
+  top[2] = polygons->m[1][point + 2];
+  //int use;
+  for(use  = 0; use < 3; use ++){
+    if(top[use] > ty){
+      ty = top[use];
+    }
+  }
+  by = top[0];
+  for(use  = 0; use < 3; use ++){
+    if(top[use] < by){
+      by = top[use];
+    }
+  }
+  for(use  = 0; use < 3; use ++){
+    if(top[use] == by){
+      top[use] = -1;
+      use = 100;
+    }
+  }
+  for(use  = 0; use < 3; use ++){
+    if(top[use] == ty){
+      top[use] = -1;
+      use = 100;
+    }
+  }
+  for(use  = 0; use < 3; use ++){
+    if(top[use] != -1){
+      my = top[use];
+      use = 100;
+    }
+  }
+  
+
+
+
+
+  
   printf("tx: %f \n", tx);
   printf("mx: %f \n", mx);
   printf("bx: %f \n", bx);
