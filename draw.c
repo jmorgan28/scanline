@@ -319,11 +319,14 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   c.green = rand() % 256;
   c.red = rand() % (256);
   c.blue = rand() % (256);
-   if(dx1 == 0){
-     bx1 = mx; // thanks emma
-   }
+  if(dx1 == 0){
+    bx1 = mx; // thanks emma
+  }
+  if(dx0 == 0){
+    bx0 = tx; // thanks emma
+  }
   if(dz1 == 0){
-     bz1 = mz; 
+    bz1 = mz; 
    }
   while(by < ty){
     draw_line( bx0,
