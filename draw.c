@@ -8,6 +8,8 @@
 #include "math.h"
 #include "gmath.h"
 
+
+/// fix top middle and lower? 
 void scanline_convert( struct matrix *polygons, int point, screen s, color c, zbuffer zb ) {
   float tx, mx, bx, ty, my, by,tz,mz,bz;
   tx = 0;
@@ -221,7 +223,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   c.green = rand() % 256;
   c.red = rand() % (256);
   c.blue = rand() % (256);
-  if(dx1 == 0){
+   if(dx1 == 0){
      bx1 = mx; // thanks emma
    }
   if(dz1 == 0){
