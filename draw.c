@@ -21,7 +21,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   tz = 0;
   mz = 0;
   bz = 0;
-  //get tops middle and bottom
+  //////////////////////////////CALCULATE VALUES 
   printf("tx: %f \n", tx);
   printf("mx: %f \n", mx);
   printf("bx: %f \n", bx);
@@ -32,75 +32,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 
 
  
-  
-
-
-
-  
-  /*if(polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1]){
-    tx = polygons->m[0][point];
-  }
-  else if(polygons->m[0][point +1] >= polygons->m[0][point + 2] && polygons->m[0][point + 1] >= polygons->m[0][point]){
-    tx = polygons->m[0][point + 1];
-  }
-  else if(polygons->m[0][point +2] >= polygons->m[0][point + 1] && polygons->m[0][point + 2] >= polygons->m[0][point]){
-    tx = polygons->m[0][point + 2];
-  }
-  if((polygons->m[0][point] >= polygons->m[0][point + 2] && polygons->m[0][point] <= polygons->m[0][point + 1]) || (polygons->m[0][point] <= polygons->m[0][point + 2] && polygons->m[0][point] >= polygons->m[0][point + 1])){
-    mx = polygons->m[0][point];
-  }
-  else if((polygons->m[0][point +1] >= polygons->m[0][point + 2] && polygons->m[0][point + 1] <= polygons->m[0][point]) || (polygons->m[0][point +1] <= polygons->m[0][point + 2] && polygons->m[0][point + 1] >= polygons->m[0][point])){
-    mx = polygons->m[0][point +1];
-  }
-  else if((polygons->m[0][point +2] >= polygons->m[0][point + 1] && polygons->m[0][point + 2] <= polygons->m[0][point]) || (polygons->m[0][point +2] <= polygons->m[0][point +1] && polygons->m[0][point + 2] >= polygons->m[0][point])){
-    mx = polygons->m[0][point +2];
-  }
-  if(polygons->m[0][point] <= polygons->m[0][point + 2] && polygons->m[0][point] <= polygons->m[0][point + 1]){
-    bx = polygons->m[0][point];
-  }
-  else if(polygons->m[0][point +1] <= polygons->m[0][point + 2] && polygons->m[0][point + 1] <= polygons->m[0][point]){
-    bx = polygons->m[0][point + 1];
-  }
-  else if(polygons->m[0][point +2] <= polygons->m[0][point + 1] && polygons->m[0][point + 2] <= polygons->m[0][point]){
-    bx = polygons->m[0][point + 2];
-  }
-
-
-  // do it again for y
-
-
-  if(polygons->m[1][point] >= polygons->m[1][point + 2] && polygons->m[1][point] >= polygons->m[1][point + 1]){
-    ty = polygons->m[1][point];
-  }
-  else if(polygons->m[1][point +1] >= polygons->m[1][point + 2] && polygons->m[1][point + 1] >= polygons->m[1][point]){
-    ty = polygons->m[1][point + 1];
-  }
-  else if(polygons->m[1][point +2] >= polygons->m[1][point + 1] && polygons->m[1][point + 2] >= polygons->m[1][point]){
-    ty = polygons->m[1][point + 2];
-  }
-  if((polygons->m[1][point] >= polygons->m[1][point + 2] && polygons->m[1][point] <= polygons->m[1][point + 1]) || (polygons->m[1][point] <= polygons->m[1][point + 2] && polygons->m[1][point] >= polygons->m[1][point + 1])){
-    my = polygons->m[1][point];
-  }
-  else if((polygons->m[1][point +1] >= polygons->m[1][point + 2] && polygons->m[1][point + 1] <= polygons->m[1][point]) || (polygons->m[1][point +1] <= polygons->m[1][point + 2] && polygons->m[1][point + 1] >= polygons->m[1][point])){
-    my = polygons->m[1][point +1];
-  }
-  else if((polygons->m[1][point +2] >= polygons->m[1][point + 1] && polygons->m[1][point + 2] <= polygons->m[1][point]) || (polygons->m[1][point +2] <= polygons->m[1][point +1] && polygons->m[1][point + 2] >= polygons->m[1][point])){
-    my = polygons->m[1][point +2];
-  }
-  if(polygons->m[1][point] <= polygons->m[1][point + 2] && polygons->m[1][point] <= polygons->m[1][point + 1]){
-    by = polygons->m[1][point];
-  }
-  else if(polygons->m[1][point +1] <= polygons->m[1][point + 2] && polygons->m[1][point + 1] <= polygons->m[1][point]){
-    by = polygons->m[1][point + 1];
-  }
-  else if(polygons->m[1][point +2] <= polygons->m[1][point + 1] && polygons->m[1][point + 2] <= polygons->m[1][point]){
-    by = polygons->m[1][point + 2];
-  }
-  */
-
-  /// do it again for z
-
-  if(polygons->m[2][point] >= polygons->m[2][point + 2] && polygons->m[2][point] >= polygons->m[2][point + 1]){
+  /*if(polygons->m[2][point] >= polygons->m[2][point + 2] && polygons->m[2][point] >= polygons->m[2][point + 1]){
     tz = polygons->m[2][point];
   }
   else if(polygons->m[2][point +1] >= polygons->m[2][point + 2] && polygons->m[2][point + 1] >= polygons->m[2][point]){
@@ -126,7 +58,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   }
   else if(polygons->m[2][point +2] <= polygons->m[2][point + 1] && polygons->m[2][point + 2] <= polygons->m[2][point]){
     bz = polygons->m[2][point + 2];
-  }
+    }*/
 
 
 
@@ -222,56 +154,12 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   printf("my: %f \n", my);
   printf("by: %f \n", by);
   printf("\n");
-  /*float dx0; //= (tx-bx)/(ty-by);
-    float dx1; //= (mx-bx)/(my-ty);
-    float dx2;// = (tx-mx) / (ty-my)
-    float bx0 = bx;
-    float bx1 = bx;
-    if(ty - by != 0){ //dx2
-    dx0 = (tx-bx)/(ty-by);
-    }
-    else{
-    dx0 = 0;
-    }
-    if(my - by != 0){ //dx1
-    dx1 = (mx-bx)/(my-by);
-    }
-    else{
-    dx1 = 0;
-    }
-    if(ty - my != 0){
-    dx2 = (tx-mx)/(ty-my); //dx3
-    }
-    else{
-    dx2 = 0;
-    }
-    while(by < ty){
-    draw_line( bx0,
-    by,
-    bx1,
-    by,
-    s, c);
-    //printf("%d\n", by);
-    by += 1;
-    if(dx0 < dx1){
-    bx0 += dx0;
-    if(by <  my){
-    bx1 += dx1;
-    }
-    else{
-    bx1 += dx2;
-    }
-    }
-    else{
-    bx1 += dx0;
-    if(by <  my){
-    bx0 += dx1;
-    }
-    else{
-    bx0 += dx2;
-    }
-    }
-    }*/
+
+
+  //////////////////Start of filling Triangle 
+
+
+  
   float dx0,dx1,dx2,dz0,dz1,dz2;
   if(ty - by != 0){
   dx0 = (tx-bx)/(ty-by);
@@ -293,7 +181,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   }
 
 
-
+  /////////////////////z stuff for later 
   if(ty - by != 0){
   dz0 = (tz-bz)/(ty-by);
   }
@@ -319,36 +207,59 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   c.green = rand() % 256;
   c.red = rand() % (256);
   c.blue = rand() % (256);
-  if(dx1 == 0){
-    bx1 = mx; // thanks emma
-  }
-  if(dx0 == 0){
-    bx0 = tx; // thanks emma
-  }
+  //if(dx1 == 0){
+  //bx1 = mx; // thanks emma
+  //}
+  //if(dx0 == 0){
+  // bx0 = tx; // thanks emma
+  // }
   if(dz1 == 0){
     bz1 = mz; 
    }
-  while(by < ty){
-    draw_line( bx0,
-	       by,
-	       bz0,
-	       bx1,
-	       by,
-	       bz1,
+  int solution = 0;
+  while(by <= my){
+    draw_line( (int)bx0,
+	       (int)by,
+	       4,
+	       (int)bx1,
+	       (int)by,
+	       4,
 	       s, zb,c);
     //printf("%f\n", by);
     bx0 += dx0;
+    bz0 += dz0;  
+    bx1 += dx1;
+    bz1 += dz1;
+    by += 1;
+  }
+  bx1 = mx; // thanks emma
+  while(by < ty){
+    draw_line((int) bx0,
+	      (int)by,
+	       4,
+	      (int) bx1,
+	      (int)by,
+	       4,
+	       s, zb,c);
+    bx0 += dx0;
     bz0 += dz0;
-    if(by >= my){
+    bx1 += dx2;
+    bz1 += dz2;
+    by += 1;
+  }
+
+    /*if(by >= my){
       bx1 += dx2;
       bz1 += dz2;
     }
     else{
       bx1 += dx1;
       bz1 += dz1;
-    }
+    } 
+    printf("bx0, %f\n", bx0);
+    printf("bx1, %f\n", bx1);
     by += 1;
-  }
+    }*/
 }
 
 
