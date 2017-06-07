@@ -179,7 +179,6 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 	       by,
 	       4,
 	       s, zb,c);
-    //printf("%f\n", by);
     bx0 += dx0;
     // bz0 += dz0;  
     bx1 += dx1;
