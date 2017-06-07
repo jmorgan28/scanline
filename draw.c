@@ -60,14 +60,14 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   top[2] = polygons->m[1][point + 2];
   by = top[0];
   for(use  = 0; use < 3; use ++){
-    if(top[use] < by){
+    if(top[use] <= by){
       g = use;
-      top[use] = -1;
     }
   }
+  top[g] = -1;
   ty = top[0];
   for(use  = 0; use < 3; use ++){
-    if(top[use] > ty){
+    if(top[use] >= ty && top[use] != -1){
       a = use;
     }
   }
