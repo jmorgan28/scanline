@@ -22,16 +22,6 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   mz = 0;
   bz = 0;
   //////////////////////////////CALCULATE VALUES 
-  /*printf("tx: %f \n", tx);
-  printf("mx: %f \n", mx);
-  printf("bx: %f \n", bx);
-  printf("ty: %f \n", ty);
-  printf("my: %f \n", my);
-  printf("by: %f \n", by);
-  printf("\n");*/
-
-
- 
   /*if(polygons->m[2][point] >= polygons->m[2][point + 2] && polygons->m[2][point] >= polygons->m[2][point + 1]){
     tz = polygons->m[2][point];
   }
@@ -59,12 +49,6 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   else if(polygons->m[2][point +2] <= polygons->m[2][point + 1] && polygons->m[2][point + 2] <= polygons->m[2][point]){
     bz = polygons->m[2][point + 2];
     }*/
-
-
-
-
-
-
   float top[3]; 
   top[0] = polygons->m[0][point];
   top[1] = polygons->m[0][point + 1];
@@ -100,9 +84,6 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
       use = 100;
     }
   }
-
-
-  // float top[3]; 
   top[0] = polygons->m[1][point];
   top[1] = polygons->m[1][point + 1];
   top[2] = polygons->m[1][point + 2];
@@ -137,68 +118,33 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
       use = 100;
     }
   }
-  
 
-
-
-  /* printf("x1: %f \n", polygons->m[0][point]);
-  printf("x2: %f \n", polygons->m[0][point + 1]);
-  printf("x3: %f \n", polygons->m[0][point + 2]);
-  printf("tx: %f \n", tx);
-  printf("mx: %f \n", mx);
-  printf("bx: %f \n", bx);
-  printf("\n");
-
-  printf("y1: %f \n", polygons->m[1][point]);
-  printf("y2: %f \n", polygons->m[1][point + 1]);
-  printf("y3: %f \n", polygons->m[1][point + 2]);
-  printf("ty: %f \n", ty);
-  printf("my: %f \n", my);
-  printf("by: %f \n", by);
-  printf("\n");*/
-
-  //if(tx >= mx && mx >= bx){
-  //printf("true x\n");
-  //}
-  //else{
-  //printf("false x\n");
-  //}
   if(ty > my && my > by){
     printf("true y\n");
   }
   else{
     printf("false y\n");
   }
-
-
-  //////////////////Start of filling Triangle 
-
-
-  
+  ///////////////////////////////////////////Start of filling Triangle 
   float dx0,dx1,dx2,dz0,dz1,dz2;
   if(ty - by != 0){
-  dx0 = (tx-bx)/(ty-by);
+    dx0 = (tx-bx)/(ty-by);
   }
   else{
-    printf("here1\n");
     dx0 = 0;
   }
   if(my - by != 0){ 
     dx1 = (mx-bx)/(my-by);
   }
   else{
-    printf("here2\n");
     dx1 = 0;
   }
   if(ty - my != 0){
     dx2 = (tx-mx)/(ty-my); 
   }
   else{
-    printf("here3\n");
     dx2 = 0;
   }
-
-
   /////////////////////z stuff for later 
   /* if(ty - by != 0){
   dz0 = (tz-bz)/(ty-by);
@@ -218,9 +164,6 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   else{
     dz2 = 0;
     }*/
-
-
-
   float bx0 = bx;
   float bx1 = bx;
   //float bz0 = bz;
@@ -259,19 +202,6 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
     //bz1 += dz2;
     by += 1;
   }
-
-    /*if(by >= my){
-      bx1 += dx2;
-      bz1 += dz2;
-    }
-    else{
-      bx1 += dx1;
-      bz1 += dz1;
-    } 
-    printf("bx0, %f\n", bx0);
-    printf("bx1, %f\n", bx1);
-    by += 1;
-    }*/
 }
 
 
