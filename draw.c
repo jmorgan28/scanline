@@ -11,7 +11,7 @@
 
 /// fix top middle and lower? 
 void scanline_convert( struct matrix *polygons, int point, screen s, color c, zbuffer zb ) {
-  double tx, mx, bx, ty, my, by,tz,mz,bz;
+  float tx, mx, bx, ty, my, by,tz,mz,bz;
   tx = 0;
   mx = 0;
   bx = 0;
@@ -49,55 +49,26 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   else if(polygons->m[2][point +2] <= polygons->m[2][point + 1] && polygons->m[2][point + 2] <= polygons->m[2][point]){
     bz = polygons->m[2][point + 2];
     }*/
-  double top[3]; 
-  top[0] = polygons->m[0][point];
-  top[1] = polygons->m[0][point + 1];
-  top[2] = polygons->m[0][point + 2];
+
+  int a,b,g;
+  float top[3];
   int use;
-  tx = top[0];
-  for(use  = 0; use < 3; use ++){
-    if(top[use] > tx){
-      tx = top[use];
-    }
-  }
-  bx = top[0];
-  for(use  = 0; use < 3; use ++){
-    if(top[use] < bx){
-      bx = top[use];
-    }
-  }
-  for(use  = 0; use < 3; use ++){
-    if(top[use] == bx){
-      top[use] = -1;
-      use = 100;
-    }
-  }
-  for(use  = 0; use < 3; use ++){
-    if(top[use] == tx){
-      top[use] = -1;
-      use = 100;
-    }
-  }
-  for(use  = 0; use < 3; use ++){
-    if(top[use] != -1){
-      mx = top[use];
-      use = 100;
-    }
-  }
+  printf("a: %d\n",a);
+  printf("b: %d\n",b);
+  printf("f: %d\n",g);
+
   top[0] = polygons->m[1][point];
   top[1] = polygons->m[1][point + 1];
   top[2] = polygons->m[1][point + 2];
-  //int use;
-  ty= top[0];
   for(use  = 0; use < 3; use ++){
     if(top[use] > ty){
-      ty = top[use];
+      a = top[use];
     }
   }
   by = top[0];
   for(use  = 0; use < 3; use ++){
     if(top[use] < by){
-      by = top[use];
+      g = top[use];
     }
   }
   for(use  = 0; use < 3; use ++){
@@ -114,23 +85,39 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   }
   for(use  = 0; use < 3; use ++){
     if(top[use] != -1){
-      my = top[use];
+      b = top[use];
       use = 100;
     }
   }
-  if(ty > my && my > by){
-    printf("true y\n");
-  }
-  else{
-      printf("false y\n");
-  }
+  tx = polygons->m[0][point + a];
+  mx = polygons->m[0][point + b];
+  bx = polygons->m[0][point + g];
+
+  
+  ty = polygons->m[1][point + a];
+  my = polygons->m[1][point + b];
+  by = polygons->m[1][point + g];
+  //top[0] = polygons->m[1][point];
+  //top[1] = polygons->m[1][point + 1];
+  //top[2] = polygons->m[1][point + 2];
+  //int use;
+  //ty= top[0];
+  
+  
+  printf("tx: %f ", tx);
+  printf("ty: %f\n", ty);
+  printf("mx: %f ", mx);
+  printf("my: %f\n,", my);
+  printf("bx: %f ", bx);
+  printf("by: %f\n,", by);
+  
   ///////////////////////////////////////////Start of filling Triangle 
-  double dx0,dx1,dx2,dz0,dz1,dz2;
+  float dx0,dx1,dx2,dz0,dz1,dz2;
   if(ty - by == 0){
     dx0 = 0;
   }
   else{
-    dx0 = (tx-bx)/(ty-by);  
+    dx0 = (1.0 * (tx-bx))/(ty-by);  
   }
   
   if(my - by == 0){
@@ -138,7 +125,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
     
   }
   else{
-    dx1 = (mx-bx)/(my-by);
+    dx1 = (1.0 * (mx-bx))/(my-by);
   }
   
   if(ty - my == 0){
@@ -146,7 +133,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
     
   }
   else{
-    dx2 = (tx-mx)/(ty-my); 
+    dx2 = (1.0 *(tx-mx))/(ty-my); 
   }
     
   /////////////////////z stuff for later 
@@ -168,8 +155,8 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   else{
     dz2 = 0;
     }*/
-  double bx0 = bx;
-  double bx1 = bx;
+  float bx0 = bx;
+  float bx1 = bx;
   //float bz0 = bz;
   //float bz1 = bz;
   c.green = rand() % 256;
@@ -360,9 +347,9 @@ void add_sphere( struct matrix * edges,
   int p0, p1, p2, p3, lat, longt;
   int latStop, longStop, latStart, longStart;
   latStart = 0;
-  latStop = num_steps;
-  longStart = 0;
-  longStop = num_steps;
+  latStop = 1;
+  longStart = 4;
+  longStop = 6;
 
   num_steps++;
   for ( lat = latStart; lat < latStop; lat++ ) {
