@@ -167,14 +167,14 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   else{
     dx0 = 0;
   }
-  if(my - by != 0){ //dx1
+  if(my - by != 0){ 
     dx1 = (mx-bx)/(my-by);
   }
   else{
     dx1 = 0;
   }
   if(ty - my != 0){
-    dx2 = (tx-mx)/(ty-my); //dx3
+    dx2 = (tx-mx)/(ty-my); 
   }
   else{
     dx2 = 0;
@@ -182,24 +182,27 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 
 
   /////////////////////z stuff for later 
-  if(ty - by != 0){
+  /* if(ty - by != 0){
   dz0 = (tz-bz)/(ty-by);
   }
   else{
     dz0 = 0;
   }
-  if(my - by != 0){ //dx1
+  if(my - by != 0){ 
     dz1 = (mz-bz)/(my-by);
   }
   else{
     dz1 = 0;
   }
   if(ty - my != 0){
-    dz2 = (tz-mz)/(ty-my); //dx3
+    dz2 = (tz-mz)/(ty-my); 
   }
   else{
     dz2 = 0;
-  }
+    }*/
+
+
+
   float bx0 = bx;
   float bx1 = bx;
   float bz0 = bz;
@@ -207,22 +210,12 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   c.green = rand() % 256;
   c.red = rand() % (256);
   c.blue = rand() % (256);
-  //if(dx1 == 0){
-  //bx1 = mx; // thanks emma
-  //}
-  //if(dx0 == 0){
-  // bx0 = tx; // thanks emma
-  // }
-  if(dz1 == 0){
-    bz1 = mz; 
-   }
-  int solution = 0;
   while(by <= my){
-    draw_line( (int)bx0,
-	       (int)by,
+    draw_line( bx0,
+	       by,
 	       4,
-	       (int)bx1,
-	       (int)by,
+	       bx1,
+	       by,
 	       4,
 	       s, zb,c);
     //printf("%f\n", by);
@@ -233,12 +226,13 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
     by += 1;
   }
   bx1 = mx; // thanks emma
+  bz1 = mz;
   while(by < ty){
-    draw_line((int) bx0,
-	      (int)by,
+    draw_line( bx0,
+	       by,
 	       4,
-	      (int) bx1,
-	      (int)by,
+	       bx1,
+	       by,
 	       4,
 	       s, zb,c);
     bx0 += dx0;
