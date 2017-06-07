@@ -22,13 +22,13 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   mz = 0;
   bz = 0;
   //////////////////////////////CALCULATE VALUES 
-  printf("tx: %f \n", tx);
+  /*printf("tx: %f \n", tx);
   printf("mx: %f \n", mx);
   printf("bx: %f \n", bx);
   printf("ty: %f \n", ty);
   printf("my: %f \n", my);
   printf("by: %f \n", by);
-  printf("\n");
+  printf("\n");*/
 
 
  
@@ -139,7 +139,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 
 
 
-  printf("x1: %f \n", polygons->m[0][point]);
+  /* printf("x1: %f \n", polygons->m[0][point]);
   printf("x2: %f \n", polygons->m[0][point + 1]);
   printf("x3: %f \n", polygons->m[0][point + 2]);
   printf("tx: %f \n", tx);
@@ -153,7 +153,20 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   printf("ty: %f \n", ty);
   printf("my: %f \n", my);
   printf("by: %f \n", by);
-  printf("\n");
+  printf("\n");*/
+
+  if(tx >= mx && mx >= bx){
+    printf("true x\n");
+  }
+  else{
+    printf("false x\n");
+  }
+  if(ty >= my && my >= by){
+    printf("true y\n");
+  }
+  else{
+    printf("false y\n");
+  }
 
 
   //////////////////Start of filling Triangle 
