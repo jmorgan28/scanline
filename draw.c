@@ -218,8 +218,8 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 
   float bx0 = bx;
   float bx1 = bx;
-  float bz0 = bz;
-  float bz1 = bz;
+  //float bz0 = bz;
+  //float bz1 = bz;
   c.green = rand() % 256;
   c.red = rand() % (256);
   c.blue = rand() % (256);
@@ -233,13 +233,13 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 	       s, zb,c);
     //printf("%f\n", by);
     bx0 += dx0;
-    bz0 += dz0;  
+    // bz0 += dz0;  
     bx1 += dx1;
-    bz1 += dz1;
+    //bz1 += dz1;
     by += 1;
   }
   bx1 = mx; // thanks emma
-  bz1 = mz;
+  //bz1 = mz;
   while(by < ty){
     draw_line( bx0,
 	       by,
@@ -249,9 +249,9 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 	       4,
 	       s, zb,c);
     bx0 += dx0;
-    bz0 += dz0;
+    // bz0 += dz0;
     bx1 += dx2;
-    bz1 += dz2;
+    //bz1 += dz2;
     by += 1;
   }
 
