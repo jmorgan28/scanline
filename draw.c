@@ -345,9 +345,9 @@ void add_sphere( struct matrix * edges,
   int p0, p1, p2, p3, lat, longt;
   int latStop, longStop, latStart, longStart;
   latStart = 0;
-  latStop = 1;
-  longStart = 4;
-  longStop = 6;
+  latStop = num_steps;
+  longStart = 0;
+  longStop = num_steps;
 
   num_steps++;
   for ( lat = latStart; lat < latStop; lat++ ) {
