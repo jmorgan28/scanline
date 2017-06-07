@@ -53,42 +53,36 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   int a,b,g;
   float top[3];
   int use;
-  printf("a: %d\n",a);
-  printf("b: %d\n",b);
-  printf("f: %d\n",g);
+ 
 
   top[0] = polygons->m[1][point];
   top[1] = polygons->m[1][point + 1];
   top[2] = polygons->m[1][point + 2];
-  for(use  = 0; use < 3; use ++){
-    if(top[use] > ty){
-      a = top[use];
-    }
-  }
   by = top[0];
   for(use  = 0; use < 3; use ++){
     if(top[use] < by){
-      g = top[use];
-    }
-  }
-  for(use  = 0; use < 3; use ++){
-    if(top[use] == by){
+      g = use;
       top[use] = -1;
-      use = 100;
     }
   }
+  ty = top[0];
   for(use  = 0; use < 3; use ++){
-    if(top[use] == ty){
-      top[use] = -1;
-      use = 100;
+    if(top[use] > ty){
+      a = use;
     }
   }
+  top[a] = -1; 
   for(use  = 0; use < 3; use ++){
     if(top[use] != -1){
-      b = top[use];
+      b = use;
       use = 100;
     }
   }
+
+
+  printf("a: %d\n",a);
+  printf("b: %d\n",b);
+  printf("f: %d\n",g);
   tx = polygons->m[0][point + a];
   mx = polygons->m[0][point + b];
   bx = polygons->m[0][point + g];
