@@ -155,13 +155,13 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   printf("by: %f \n", by);
   printf("\n");*/
 
-  if(tx >= mx && mx >= bx){
-    printf("true x\n");
-  }
-  else{
-    printf("false x\n");
-  }
-  if(ty >= my && my >= by){
+  //if(tx >= mx && mx >= bx){
+  //printf("true x\n");
+  //}
+  //else{
+  //printf("false x\n");
+  //}
+  if(ty > my && my > by){
     printf("true y\n");
   }
   else{
@@ -178,18 +178,21 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   dx0 = (tx-bx)/(ty-by);
   }
   else{
+    printf("here1\n");
     dx0 = 0;
   }
   if(my - by != 0){ 
     dx1 = (mx-bx)/(my-by);
   }
   else{
+    printf("here2\n");
     dx1 = 0;
   }
   if(ty - my != 0){
     dx2 = (tx-mx)/(ty-my); 
   }
   else{
+    printf("here3\n");
     dx2 = 0;
   }
 
@@ -320,7 +323,7 @@ void draw_polygons( struct matrix *polygons, screen s, zbuffer zb, color c ) {
 
     normal = calculate_normal(polygons, point);
     
-    // if ( normal[2] > 0 ) {
+    //if ( normal[2] > 0 ) {
       
       //printf("polygon %d\n", point);
       scanline_convert( polygons, point, s,c, zb ); 
@@ -348,7 +351,7 @@ void draw_polygons( struct matrix *polygons, screen s, zbuffer zb, color c ) {
       		 polygons->m[1][point+2],
       		 polygons->m[2][point+2],
       		 s, zb, c);
-      //}
+ //}
   }
 }
 
