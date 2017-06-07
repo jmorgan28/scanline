@@ -70,6 +70,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   top[1] = polygons->m[0][point + 1];
   top[2] = polygons->m[0][point + 2];
   int use;
+  tx = top[0];
   for(use  = 0; use < 3; use ++){
     if(top[use] > tx){
       tx = top[use];
@@ -106,6 +107,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   top[1] = polygons->m[1][point + 1];
   top[2] = polygons->m[1][point + 2];
   //int use;
+  ty= top[0];
   for(use  = 0; use < 3; use ++){
     if(top[use] > ty){
       ty = top[use];
