@@ -21,35 +21,6 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   tz = 0;
   mz = 0;
   bz = 0;
-  //////////////////////////////CALCULATE VALUES 
-  /*if(polygons->m[2][point] >= polygons->m[2][point + 2] && polygons->m[2][point] >= polygons->m[2][point + 1]){
-    tz = polygons->m[2][point];
-  }
-  else if(polygons->m[2][point +1] >= polygons->m[2][point + 2] && polygons->m[2][point + 1] >= polygons->m[2][point]){
-    tz = polygons->m[2][point + 1];
-  }
-  else if(polygons->m[2][point +2] >= polygons->m[2][point + 1] && polygons->m[2][point + 2] >= polygons->m[2][point]){
-    tz = polygons->m[2][point + 2];
-  }
-  if((polygons->m[2][point] >= polygons->m[2][point + 2] && polygons->m[2][point] <= polygons->m[2][point + 1]) || (polygons->m[2][point] <= polygons->m[2][point + 2] && polygons->m[2][point] >= polygons->m[2][point + 1])){
-    mz = polygons->m[2][point];
-  }
-  else if((polygons->m[2][point +1] >= polygons->m[2][point + 2] && polygons->m[2][point + 1] <= polygons->m[2][point]) || (polygons->m[2][point +1] <= polygons->m[2][point + 2] && polygons->m[2][point + 1] >= polygons->m[2][point])){
-    mz = polygons->m[2][point +1];
-  }
-  else if((polygons->m[2][point +2] >= polygons->m[2][point + 1] && polygons->m[2][point + 2] <= polygons->m[2][point]) || (polygons->m[2][point +2] <= polygons->m[2][point +1] && polygons->m[2][point + 2] >= polygons->m[2][point])){
-    mz = polygons->m[2][point +2];
-  }
-  if(polygons->m[2][point] <= polygons->m[2][point + 2] && polygons->m[2][point] <= polygons->m[2][point + 1]){
-    bz = polygons->m[2][point];
-  }
-  else if(polygons->m[2][point +1] <= polygons->m[2][point + 2] && polygons->m[2][point + 1] <= polygons->m[2][point]){
-    bz = polygons->m[2][point + 1];
-  }
-  else if(polygons->m[2][point +2] <= polygons->m[2][point + 1] && polygons->m[2][point + 2] <= polygons->m[2][point]){
-    bz = polygons->m[2][point + 2];
-    }*/
-
   int a,b,g;
   float top[3];
   int use;
@@ -83,31 +54,27 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 
     
 
-
-  printf("a: %d\n",a);
-  printf("b: %d\n",b);
-  printf("g: %d\n",g);
+  //x
   tx = polygons->m[0][point + a];
   mx = polygons->m[0][point + b];
   bx = polygons->m[0][point + g];
 
-  
+  //y
   ty = polygons->m[1][point + a];
   my = polygons->m[1][point + b];
   by = polygons->m[1][point + g];
-  //top[0] = polygons->m[1][point];
-  //top[1] = polygons->m[1][point + 1];
-  //top[2] = polygons->m[1][point + 2];
-  //int use;
-  //ty= top[0];
+
+  //z
+  tz = polygons->m[2][point + a];
+  mz = polygons->m[2][point + b];
+  bz = polygons->m[2][point + g];
   
-  
-  printf("tx: %f ", tx);
+  /*printf("tx: %f ", tx);
   printf("ty: %f\n", ty);
   printf("mx: %f ", mx);
   printf("my: %f\n,", my);
   printf("bx: %f ", bx);
-  printf("by: %f\n,", by);
+  printf("by: %f\n,", by);*/
   
   ///////////////////////////////////////////Start of filling Triangle 
   float dx0,dx1,dx2,dz0,dz1,dz2;
@@ -135,7 +102,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   }
     
   /////////////////////z stuff for later 
-  /* if(ty - by != 0){
+  if(ty - by != 0){
   dz0 = (tz-bz)/(ty-by);
   }
   else{
@@ -152,11 +119,11 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   }
   else{
     dz2 = 0;
-    }*/
+    }
   float bx0 = bx;
   float bx1 = bx;
-  //float bz0 = bz;
-  //float bz1 = bz;
+  float bz0 = bz;
+  float bz1 = bz;
   c.green = rand() % 256;
   c.red = rand() % (256);
   c.blue = rand() % (256);
@@ -169,13 +136,13 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 	       100,
 	       s, zb,c);
     bx0 += dx0;
-    // bz0 += dz0;  
+    bz0 += dz0;  
     bx1 += dx1;
-    //bz1 += dz1;
+    bz1 += dz1;
     by ++;
   }
   bx1 = mx; // thanks emma
-  //bz1 = mz;
+  bz1 = mz;
   while(by < ty){
     draw_line( bx0,
 	       by,
@@ -185,9 +152,9 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 	       100,
 	       s, zb,c);
     bx0 += dx0;
-    // bz0 += dz0;
+    bz0 += dz0;
     bx1 += dx2;
-    //bz1 += dz2;
+    bz1 += dz2;
     by ++;
   }
 }
@@ -243,7 +210,7 @@ void draw_polygons( struct matrix *polygons, screen s, zbuffer zb, color c ) {
 
     normal = calculate_normal(polygons, point);
     
-    //if ( normal[2] > 0 ) {
+    if ( normal[2] > 0 ) {
       
       //printf("polygon %d\n", point);
       scanline_convert( polygons, point, s,c, zb ); 
@@ -271,7 +238,7 @@ void draw_polygons( struct matrix *polygons, screen s, zbuffer zb, color c ) {
 		  polygons->m[1][point+2],
 		  polygons->m[2][point+2],
 		  s, zb, c);
- //}
+    }
   }
 }
 
@@ -762,6 +729,9 @@ void draw_line(int x0, int y0, double z0,
     }
   }
 
+  if(loop_end != loop_start){
+    dz = (z1-z0) / (loop_end - loop_start);
+  }
 
   while ( loop_start < loop_end ) {
     
@@ -780,6 +750,7 @@ void draw_line(int x0, int y0, double z0,
       y+= dy_east;
       d+= d_east;
     }
+    z +=dz;
     loop_start++;
   } //end drawing loop
   plot( s, zb, c, x1, y1, z );
