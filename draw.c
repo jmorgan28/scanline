@@ -82,7 +82,8 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
     dx0 = 0;
   }
   else{
-    dx0 = (1.0 * (tx-bx))/(ty-by);  
+    dx0 = (1.0 * (tx-bx))/(ty-by);
+    dz0 = (1.0 *(tz-bz))/(ty-by);
   }
   
   if(my - by == 0){
@@ -91,6 +92,7 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   }
   else{
     dx1 = (1.0 * (mx-bx))/(my-by);
+    dz1 = (1.0 *(mz-bz))/(my-by);
   }
   
   if(ty - my == 0){
@@ -98,28 +100,9 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
     
   }
   else{
-    dx2 = (1.0 *(tx-mx))/(ty-my); 
+    dx2 = (1.0 *(tx-mx))/(ty-my);
+    dz2 = (1.0 *(tz-mz))/(ty-my); 
   }
-    
-  /////////////////////z stuff for later 
-  if(ty - by != 0){
-  dz0 = (tz-bz)/(ty-by);
-  }
-  else{
-    dz0 = 0;
-  }
-  if(my - by != 0){ 
-    dz1 = (mz-bz)/(my-by);
-  }
-  else{
-    dz1 = 0;
-  }
-  if(ty - my != 0){
-    dz2 = (tz-mz)/(ty-my); 
-  }
-  else{
-    dz2 = 0;
-    }
   float bx0 = bx;
   float bx1 = bx;
   float bz0 = bz;
@@ -130,10 +113,10 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   while(by <= my){
     draw_line( bx0,
 	       by,
-	       100,
+	       bz0,
 	       bx1,
 	       by,
-	       100,
+	       bz1,
 	       s, zb,c);
     bx0 += dx0;
     bz0 += dz0;  
@@ -146,10 +129,10 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   while(by < ty){
     draw_line( bx0,
 	       by,
-	       100,
+	       bz0,
 	       bx1,
 	       by,
-	       100,
+	       bz1,
 	       s, zb,c);
     bx0 += dx0;
     bz0 += dz0;
@@ -217,7 +200,7 @@ void draw_polygons( struct matrix *polygons, screen s, zbuffer zb, color c ) {
       /* c.red = 0; */
       /* c.green = 255; */
       /* c.blue = 0; */
-       draw_line( polygons->m[0][point],
+      /*draw_line( polygons->m[0][point],
       		 polygons->m[1][point],
       		 polygons->m[2][point],
       		 polygons->m[0][point+1],
@@ -237,8 +220,8 @@ void draw_polygons( struct matrix *polygons, screen s, zbuffer zb, color c ) {
 		  polygons->m[0][point+2],
 		  polygons->m[1][point+2],
 		  polygons->m[2][point+2],
-		  s, zb, c);
-    }
+		  s, zb, c);*/
+      }
   }
 }
 
@@ -753,5 +736,6 @@ void draw_line(int x0, int y0, double z0,
     z +=dz;
     loop_start++;
   } //end drawing loop
+  
   plot( s, zb, c, x1, y1, z );
 } //end draw_line
