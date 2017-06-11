@@ -9,7 +9,7 @@
 #include "gmath.h"
 
 
-/// fix top middle and lower? 
+/// I have no idea how to fully implement lighting :( 
 void scanline_convert( struct matrix *polygons, int point, screen s, color c, zbuffer zb ) {
   float tx, mx, bx, ty, my, by,tz,mz,bz;
   tx = 0;
@@ -110,6 +110,10 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
   c.green = rand() % 256;
   c.red = rand() % (256);
   c.blue = rand() % (256);
+
+  /*c.green = 50;
+  c.red = 50;
+  c.blue = 50;*/
   while(by <= my){
     draw_line( bx0,
 	       by,
@@ -143,7 +147,11 @@ void scanline_convert( struct matrix *polygons, int point, screen s, color c, zb
 }
 
 
-
+int * ambient(int * color, double a){
+  color[0] *= a;
+  color[1] *= a;
+  color[2] *= a;
+}
 
 /*======== void add_polygon() ==========
 Inputs:   struct matrix *surfaces
